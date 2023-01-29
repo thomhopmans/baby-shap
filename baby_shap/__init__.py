@@ -1,6 +1,7 @@
 __version__ = "0.0.1"
 
 from .explainers._kernel import KernelExplainer
+from .explainers._linear import LinearExplainer
 from .plots._beeswarm import summary_legacy as summary_plot
 from .plots._decision import decision as decision_plot
 from .plots._decision import multioutput_decision as multioutput_decision_plot
@@ -13,6 +14,7 @@ from .utils._legacy import kmeans
 
 __all__ = [
     "KernelExplainer",
+    "LinearExplainer",
     "kmeans",
     "summary_plot",
     "decision_plot",

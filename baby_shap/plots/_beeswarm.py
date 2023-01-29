@@ -258,8 +258,8 @@ def beeswarm(
             clust_order = sort_inds(partition_tree, np.abs(values))
 
             # now relax the requirement to match the parition tree ordering for connections above cluster_threshold
-            dist = scipy.spatial.distance.squareform(
-                scipy.cluster.hierarchy.cophenet(partition_tree)
+            dist = sp.spatial.distance.squareform(
+                sp.cluster.hierarchy.cophenet(partition_tree)
             )
             feature_order = get_sort_order(
                 dist, clust_order, cluster_threshold, feature_order

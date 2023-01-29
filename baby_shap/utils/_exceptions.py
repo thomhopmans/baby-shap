@@ -5,3 +5,19 @@ class DimensionError(Exception):
     """
 
     pass
+
+
+class InvalidFeaturePerturbationError(ValueError):
+    pass
+
+
+class InvalidModelError(ValueError):
+    pass
+
+
+class InvalidAlgorithmError(ValueError):
+    pass
+
+
+class InvalidClusteringError(ValueError):
+    pass
