@@ -1,6 +1,47 @@
 import numpy as np
 import pandas as pd
 import scipy as sp
+from scipy import sparse
+from sklearn import cluster, impute
+
+
+def kmeans(X, k, round_values=True):
+    """Summarize a dataset with k mean samples weighted by the number of data points they
+    each represent.
+    Parameters
+    ----------
+    X : numpy.array or pandas.DataFrame or any scipy.sparse matrix
+        Matrix of data samples to summarize (# samples x # features)
+    k : int
+        Number of means to use for approximation.
+    round_values : bool
+        For all i, round the ith dimension of each mean sample to match the nearest value
+        from X[:,i]. This ensures discrete features always get a valid value.
+    Returns
+    -------
+    DenseData object.
+    """
+
+    group_names = [str(i) for i in range(X.shape[1])]
+    if str(type(X)).endswith("'pandas.core.frame.DataFrame'>"):
+        group_names = X.columns
+        X = X.values
+
+    # in case there are any missing values in data impute them
+    imp = impute.SimpleImputer(missing_values=np.nan, strategy="mean")
+    X = imp.fit_transform(X)
+
+    kmeans = cluster.KMeans(n_clusters=k, random_state=0).fit(X)
+
+    if round_values:
+        for i in range(k):
+            for j in range(X.shape[1]):
+                xj = X[:, j].toarray().flatten() if sparse.issparse(X) else X[:, j]
+                ind = np.argmin(np.abs(xj - kmeans.cluster_centers_[i, j]))
+                kmeans.cluster_centers_[i, j] = X[ind, j]
+    return DenseData(
+        kmeans.cluster_centers_, group_names, None, 1.0 * np.bincount(kmeans.labels_)
+    )
 
 
 class Instance:
