@@ -114,7 +114,9 @@ class Explainer:
             if algorithm == "auto":
 
                 # use implementation-aware methods if possible
-                if explainers.LinearExplainer.supports_model_with_masker(model, self.masker):
+                if explainers.LinearExplainer.supports_model_with_masker(
+                    model, self.masker
+                ):
                     algorithm = "linear"
                 # elif explainers.Additive.supports_model_with_masker(model, self.masker):
                 #     algorithm = "additive"
@@ -137,7 +139,7 @@ class Explainer:
                 # if we get here then we don't know how to handle what was given to us
                 else:
                     raise TypeError(
-                        "The passed model is not callable and cannot be analyzed directly with the given masker! Model: "
+                        "The passed model is not callable and cannot be analyzed with the masker! Model: "
                         + str(model)
                     )
 

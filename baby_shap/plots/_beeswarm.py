@@ -1,5 +1,4 @@
-""" Summary plots of SHAP values across a whole dataset.
-"""
+""" Summary plots of SHAP values across a whole dataset."""
 
 import warnings
 
@@ -142,7 +141,7 @@ def beeswarm(
     if partition_tree is not None:
         assert (
             partition_tree.shape[1] == 4
-        ), "The clustering provided by the Explanation object does not seem to be a partition tree (which is all shap.plots.bar supports)!"
+        ), "Clustering provided by the Explanation object is not partition tree (which is all shap.plots.bar supports)!"
 
     # plotting SHAP interaction values
     if len(values.shape) == 3:
@@ -761,7 +760,7 @@ def summary_legacy(
                     values = np.array(
                         values, dtype=np.float64
                     )  # make sure this can be numeric
-            except:
+            except Exception:
                 colored_feature = False
             N = len(shaps)
             # hspacing = (np.max(shaps) - np.min(shaps)) / 200
@@ -979,8 +978,9 @@ def summary_legacy(
 
         # loop through each feature and plot:
         for pos, ind in enumerate(feature_order):
-            # decide how to handle: if #unique < layered_violin_max_num_bins then split by unique value, otherwise use bins/percentiles.
-            # to keep simpler code, in the case of uniques, we just adjust the bins to align with the unique counts.
+            # decide how to handle: if #unique < layered_violin_max_num_bins then split by unique value,
+            # otherwise use bins/percentiles.  to keep simpler code, in the case of uniques, we just adjust
+            # the bins to align with the unique counts.
             feature = features[:, ind]
             unique, counts = np.unique(feature, return_counts=True)
             if unique.shape[0] <= layered_violin_max_num_bins:
@@ -1002,7 +1002,8 @@ def summary_legacy(
                 # if there's only one element, then we can't
                 if shaps.shape[0] == 1:
                     warnings.warn(
-                        "not enough data in bin #%d for feature %s, so it'll be ignored. Try increasing the number of records to plot."
+                        "not enough data in bin #%d for feature %s, so it'll be ignored. "
+                        "Try increasing the number of records to plot."
                         % (i, feature_names[ind])
                     )
                     # to ignore it, just set it to the previous y-values (so the area between them will be zero).

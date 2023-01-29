@@ -24,7 +24,14 @@ import scipy.cluster
 from baby_shap.plots._force_matplotlib import draw_additive_plot
 from baby_shap.plots._labels import labels
 from baby_shap.utils._clustering import hclust_ordering
-from baby_shap.utils._legacy import Data, DenseData, Instance, Link, Model, convert_to_link
+from baby_shap.utils._legacy import (
+    Data,
+    DenseData,
+    Instance,
+    Link,
+    Model,
+    convert_to_link,
+)
 
 
 def force(
@@ -445,7 +452,8 @@ class SimpleListVisualizer(BaseVisualizer):
         }
 
     def html(self):
-        # assert have_ipython, "IPython must be installed to use this visualizer! Run `pip install ipython` and then restart shap."
+        # assert have_ipython, "IPython must be installed to use this visualizer!
+        # Run `pip install ipython` and then restart shap."
         return """
 <div id='{id}'>{err_msg}</div>
  <script>
@@ -485,7 +493,8 @@ class AdditiveForceVisualizer(BaseVisualizer):
         }
 
     def html(self, label_margin=20):
-        # assert have_ipython, "IPython must be installed to use this visualizer! Run `pip install ipython` and then restart shap."
+        # assert have_ipython, "IPython must be installed to use this visualizer! 
+        # Run `pip install ipython` and then restart shap."
         self.data["labelMargin"] = label_margin
         return """
 <div id='{id}'>{err_msg}</div>
@@ -565,7 +574,8 @@ class AdditiveForceArrayVisualizer(BaseVisualizer):
                 }
 
     def html(self):
-        # assert have_ipython, "IPython must be installed to use this visualizer! Run `pip install ipython` and then restart shap."
+        # assert have_ipython, "IPython must be installed to use this visualizer! 
+        # Run `pip install ipython` and then restart shap."
         return """
 <div id='{id}'>{err_msg}</div>
  <script>

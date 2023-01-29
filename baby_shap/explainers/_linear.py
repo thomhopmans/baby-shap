@@ -60,7 +60,9 @@ class LinearExplainer(Explainer):
         **kwargs
     ):
         if feature_perturbation is not None:
-            warnings.warn("The feature_perturbation option is now deprecated in favor of using the appropriate masker (maskers.Independent, or maskers.Impute)")
+            warnings.warn(
+                "feature_perturbation arg is deprecated in favor of using masker (Independent or Impute)"
+            )
         else:
             feature_perturbation = "interventional"
 
@@ -297,7 +299,7 @@ class LinearExplainer(Explainer):
 
         try:
             LinearExplainer._parse_model(model)
-        except:
+        except Exception:
             return False
         return True
 
