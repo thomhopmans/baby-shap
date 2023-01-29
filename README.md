@@ -9,7 +9,7 @@
 
 Baby Shap is a stripped and opiniated version of **SHAP (SHapley Additive exPlanations)**, a game theoretic approach to explain the output of any machine learning model by Scott Lundberg. It connects optimal credit allocation with local explanations using the classic Shapley values from game theory and their related extensions (see [papers](#citations) for details and citations). 
 
-**Baby Shap solely implements and maintains the Kernel Explainer and a limited range of plots, while limiting the number of raised errors, warnings, dependencies and conflicts.**
+**Baby Shap solely implements and maintains the Linear and Kernel Explainer and a limited range of plots, while limiting the number of dependencies, conflicts and raised warnings and errors.**
 
 ## Install
 
@@ -61,13 +61,3 @@ baby_shap.force_plot(explainer.expected_value[0], shap_values[0], X_test, link="
 <p align="center">
   <img width="813" src="https://raw.githubusercontent.com/slundberg/shap/master/docs/artwork/iris_dataset.png" />
 </p>
-
-### KernelExplainer
-
-An implementation of Kernel SHAP, a model agnostic method to estimate SHAP values for any model. Because it makes no assumptions about the model type, KernelExplainer is slower than the other model type specific algorithms.
-
-- [**Census income classification with scikit-learn**](https://slundberg.github.io/shap/notebooks/Census%20income%20classification%20with%20scikit-learn.html) - Using the standard adult census income dataset, this notebook trains a k-nearest neighbors classifier using scikit-learn and then explains predictions using `baby_shap`.
-
-- [**ImageNet VGG16 Model with Keras**](https://slundberg.github.io/shap/notebooks/ImageNet%20VGG16%20Model%20with%20Keras.html) - Explain the classic VGG16 convolutional nerual network's predictions for an image. This works by applying the model agnostic Kernel SHAP method to a super-pixel segmented image.
-
-- [**Iris classification**](https://slundberg.github.io/shap/notebooks/Iris%20classification%20with%20scikit-learn.html) - A basic demonstration using the popular iris species dataset. It explains predictions from six different models in scikit-learn using `baby_shap`.
