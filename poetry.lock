@@ -1141,18 +1141,6 @@ files = [
 ]
 
 [[package]]
-name = "slicer"
-version = "0.0.7"
-description = "A small package for big slicing."
-category = "main"
-optional = false
-python-versions = ">=3.6"
-files = [
-    {file = "slicer-0.0.7-py3-none-any.whl", hash = "sha256:0b94faa5251c0f23782c03f7b7eedda91d80144059645f452c4bc80fab875976"},
-    {file = "slicer-0.0.7.tar.gz", hash = "sha256:f5d5f7b45f98d155b9c0ba6554fa9770c6b26d5793a3e77a1030fb56910ebeec"},
-]
-
-[[package]]
 name = "stack-data"
 version = "0.6.2"
 description = "Extract data from python stack frames and tracebacks for informative displays"
@@ -1260,4 +1248,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.10, <3.12"
-content-hash = "69c8a40b590b5a8e9e3331ff8b9f2c76038735d170e44e2165eaf72ebaeef4c9"
+content-hash = "758be50f99fcf3f6af7fa2383c0940b96ad734d91cdcf104ccbeaffce1f966ee"
