@@ -451,7 +451,7 @@ def beeswarm(
 
         m = cm.ScalarMappable(cmap=color)
         m.set_array([0, 1])
-        cb = pl.colorbar(m, ticks=[0, 1], aspect=80)
+        cb = pl.colorbar(m, ticks=[0, 1], aspect=80, ax=pl.gca())
         cb.set_ticklabels([labels["FEATURE_VALUE_LOW"], labels["FEATURE_VALUE_HIGH"]])
         cb.set_label(color_bar_label, size=12, labelpad=0)
         cb.ax.tick_params(labelsize=11, length=0)
@@ -1089,7 +1089,7 @@ def summary_legacy(
             cmap=cmap if plot_type != "layered_violin" else pl.get_cmap(color)
         )
         m.set_array([0, 1])
-        cb = pl.colorbar(m, ticks=[0, 1], aspect=80)
+        cb = pl.colorbar(m, ticks=[0, 1], aspect=80, ax=pl.gca())
         cb.set_ticklabels([labels["FEATURE_VALUE_LOW"], labels["FEATURE_VALUE_HIGH"]])
         cb.set_label(color_bar_label, size=12, labelpad=0)
         cb.ax.tick_params(labelsize=11, length=0)
