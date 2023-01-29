@@ -452,8 +452,6 @@ def scatter(
             cb.ax.tick_params(length=0)
         cb.set_alpha(1)
         cb.outline.set_visible(False)
-    #         bbox = cb.ax.get_window_extent().transformed(fig.dpi_scale_trans.inverted())
-    #         cb.ax.set_aspect((bbox.height - 0.7) * 20)
 
     # handles any setting of xmax and xmin
     # note that we handle None,float, or "percentile(float)" formats
