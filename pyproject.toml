@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "baby-shap"
-version = "0.0.4"
+version = "0.0.5"
 description = "A stripped and opiniated version of Scott Lundberg's SHAP (SHapley Additive exPlanations)"
 authors = ["Thom Hopmans"]
 license = "MIT"

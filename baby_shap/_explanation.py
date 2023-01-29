@@ -10,7 +10,7 @@ from slicer import Alias, Obj, Slicer
 from baby_shap.utils._exceptions import DimensionError
 from baby_shap.utils._general import OpChain
 
-op_chain_root = OpChain("shap.Explanation")
+op_chain_root = OpChain("shap._explanation.Explanation")
 
 
 class MetaExplanation(type):
@@ -90,7 +90,6 @@ class Explanation(metaclass=MetaExplanation):
 
         self.compute_time = compute_time
 
-        # cloning. TODOsomeday: better cloning :)
         if issubclass(type(values), Explanation):
             e = values
             values = e.values
@@ -598,9 +597,6 @@ class Explanation(metaclass=MetaExplanation):
             self.clustering,
         )
         return self._numpy_func("min", axis=axis)
-
-    # def reshape(self, *args):
-    #     return self._numpy_func("reshape", newshape=args)
 
     @property
     def abs(self):
