@@ -2,7 +2,7 @@ __version__ = "0.0.6"
 
 from .explainers._kernel import KernelExplainer
 from .explainers._linear import LinearExplainer
-from .plots._beeswarm import summary_legacy as summary_plot
+from .plots._beeswarm import summary_legacy as summary_plot, beeswarm as beeswarm_plot
 from .plots._decision import decision as decision_plot
 from .plots._decision import multioutput_decision as multioutput_decision_plot
 from .plots._force import force as force_plot
@@ -15,8 +15,9 @@ __all__ = [
     "KernelExplainer",
     "LinearExplainer",
     "kmeans",
-    "summary_plot",
     "decision_plot",
+    "summary_plot",
+    "beeswarm_plot",
     "multioutput_decision_plot",
     "force_plot",
     "initjs",

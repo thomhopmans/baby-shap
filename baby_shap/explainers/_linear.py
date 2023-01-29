@@ -59,6 +59,8 @@ class LinearExplainer(Explainer):
         feature_perturbation=None,
         **kwargs
     ):
+        super().__init__(model)
+
         if feature_perturbation is not None:
             warnings.warn(
                 "feature_perturbation arg is deprecated in favor of using masker (Independent or Impute)"
