@@ -805,8 +805,6 @@ def summary_legacy(
                     shaps[nan_mask],
                     pos + ys[nan_mask],
                     color="#777777",
-                    vmin=vmin,
-                    vmax=vmax,
                     s=16,
                     alpha=alpha,
                     linewidth=0,
