@@ -65,7 +65,7 @@ class KernelExplainer(Explainer):
     """
 
     def __init__(self, model, data, link=IdentityLink(), **kwargs):
-        super().__init__(model)
+        # super().__init__(model)
 
         # convert incoming inputs to standardized iml objects
         self.link = convert_to_link(link)

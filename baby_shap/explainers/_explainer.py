@@ -4,9 +4,8 @@ import time
 import numpy as np
 import scipy as sp
 
-from baby_shap import explainers, links, maskers
+from baby_shap import links, maskers
 from baby_shap._explanation import Explanation
-from baby_shap.utils._exceptions import InvalidAlgorithmError
 from baby_shap.utils._general import safe_isinstance
 from baby_shap.utils._show_progress import show_progress
 
