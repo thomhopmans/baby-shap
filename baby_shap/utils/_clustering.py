@@ -105,7 +105,7 @@ def hclust(X, y=None, linkage="single", metric="auto", random_state=0):
 
     if y is not None:
         warnings.warn(
-            "Ignoring the y argument passed to shap.utils.hclust since the given clustering metric is not based on label fitting!"
+            "Ignoring the y passed to shap.utils.hclust since the clustering metric is not based on label fitting!"
         )
     if safe_isinstance(X, "pandas.core.frame.DataFrame"):
         bg_no_nan = X.values.copy()

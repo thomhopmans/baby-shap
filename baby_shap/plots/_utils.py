@@ -109,46 +109,6 @@ def merge_nodes(values, partition_tree):
     return partition_tree_new, ind1, ind2
 
 
-def dendrogram_coords(leaf_positions, partition_tree):
-    """Returns the x and y coords of the lines of a dendrogram where the leaf order is given.
-
-    Note that scipy can compute these coords as well, but it does not allow you to easily specify
-    a specific leaf order, hence this reimplementation.
-    """
-
-    xout = []
-    yout = []
-    _dendrogram_coords_rec(
-        partition_tree.shape[0] - 1, leaf_positions, partition_tree, xout, yout
-    )
-
-    return np.array(xout), np.array(yout)
-
-
-def _dendrogram_coords_rec(pos, leaf_positions, partition_tree, xout, yout):
-    M = partition_tree.shape[0] + 1
-
-    if pos < 0:
-        return leaf_positions[pos + M], 0
-
-    left = int(partition_tree[pos, 0]) - M
-    right = int(partition_tree[pos, 1]) - M
-
-    x_left, y_left = _dendrogram_coords_rec(
-        left, leaf_positions, partition_tree, xout, yout
-    )
-    x_right, y_right = _dendrogram_coords_rec(
-        right, leaf_positions, partition_tree, xout, yout
-    )
-
-    y_curr = partition_tree[pos, 2]
-
-    xout.append([x_left, x_left, x_right, x_right])
-    yout.append([y_left, y_curr, y_curr, y_right])
-
-    return (x_left + x_right) / 2, y_curr
-
-
 def fill_internal_max_values(partition_tree, leaf_values):
     """This fills the forth column of the partition tree matrix with the max leaf value in that cluster."""
     M = partition_tree.shape[0] + 1

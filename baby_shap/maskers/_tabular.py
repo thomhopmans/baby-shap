@@ -8,7 +8,7 @@ from baby_shap.utils._clustering import hclust
 from baby_shap.utils._exceptions import DimensionError, InvalidClusteringError
 from baby_shap.utils._general import safe_isinstance, sample
 
-log = logging.getLogger("shap")
+log = logging.getLogger("baby_shap")
 
 
 class Tabular(Masker):
@@ -66,7 +66,8 @@ class Tabular(Masker):
                 self.clustering = clustering
             else:
                 raise InvalidClusteringError(
-                    "Unknown clustering given! Make sure you pass a distance metric as a string, or a clustering as a numpy.ndarray."
+                    "Unknown clustering given! Make sure you pass a distance metric as a string, "
+                    "or a clustering as a numpy.ndarray."
                 )
         else:
             self.clustering = None

@@ -4,9 +4,8 @@ import time
 import numpy as np
 import scipy as sp
 
-from baby_shap import explainers, links, maskers
+from baby_shap import links, maskers
 from baby_shap._explanation import Explanation
-from baby_shap.utils._exceptions import InvalidAlgorithmError
 from baby_shap.utils._general import safe_isinstance
 from baby_shap.utils._show_progress import show_progress
 
@@ -77,7 +76,6 @@ class Explainer:
 
         seed: None or int
             seed for reproducibility
-
         """
 
         self.model = model
@@ -107,102 +105,104 @@ class Explainer:
 
         # if we are called directly (as opposed to through super()) then we convert ourselves to the subclass
         # that implements the specific algorithm that was chosen
-        if self.__class__ is Explainer:
+        # if self.__class__ is Explainer:
 
-            # do automatic algorithm selection
-            # from .. import explainers
-            if algorithm == "auto":
+        #     # do automatic algorithm selection
+        #     # from .. import explainers
+        #     if algorithm == "auto":
 
-                # use implementation-aware methods if possible
-                if explainers.LinearExplainer.supports_model_with_masker(model, self.masker):
-                    algorithm = "linear"
-                # elif explainers.Additive.supports_model_with_masker(model, self.masker):
-                #     algorithm = "additive"
+        #         # use implementation-aware methods if possible
+        #         if explainers.LinearExplainer.supports_model_with_masker(
+        #             model, self.masker
+        #         ):
+        #             algorithm = "linear"
+        #         # elif explainers.Additive.supports_model_with_masker(model, self.masker):
+        #         #     algorithm = "additive"
 
-                # otherwise use a model agnostic method
-                elif callable(self.model):
-                    if issubclass(type(self.masker), maskers.Independent):
-                        if self.masker.shape[1] <= 10:
-                            algorithm = "exact"
-                        else:
-                            algorithm = "permutation"
-                    elif issubclass(type(self.masker), maskers.Partition):
-                        if self.masker.shape[1] <= 32:
-                            algorithm = "exact"
-                        else:
-                            algorithm = "permutation"
-                    else:
-                        algorithm = "permutation"
+        #         # otherwise use a model agnostic method
+        #         elif callable(self.model):
+        #             if issubclass(type(self.masker), maskers.Independent):
+        #                 if self.masker.shape[1] <= 10:
+        #                     algorithm = "exact"
+        #                 else:
+        #                     algorithm = "permutation"
+        #             elif issubclass(type(self.masker), maskers.Partition):
+        #                 if self.masker.shape[1] <= 32:
+        #                     algorithm = "exact"
+        #                 else:
+        #                     algorithm = "permutation"
+        #             else:
+        #                 algorithm = "permutation"
 
-                # if we get here then we don't know how to handle what was given to us
-                else:
-                    raise TypeError(
-                        "The passed model is not callable and cannot be analyzed directly with the given masker! Model: "
-                        + str(model)
-                    )
+        #         # if we get here then we don't know how to handle what was given to us
+        #         else:
+        #             raise TypeError(
+        #                 "The passed model is not callable and cannot be analyzed with the masker! Model: "
+        #                 + str(model)
+        #             )
 
-            # build the right subclass
-            if algorithm == "exact":
-                self.__class__ = explainers.Exact
-                explainers.Exact.__init__(
-                    self,
-                    self.model,
-                    self.masker,
-                    link=self.link,
-                    feature_names=self.feature_names,
-                    linearize_link=linearize_link,
-                    **kwargs
-                )
-            elif algorithm == "permutation":
-                self.__class__ = explainers.Permutation
-                explainers.Permutation.__init__(
-                    self,
-                    self.model,
-                    self.masker,
-                    link=self.link,
-                    feature_names=self.feature_names,
-                    linearize_link=linearize_link,
-                    seed=seed,
-                    **kwargs
-                )
-            elif algorithm == "partition":
-                self.__class__ = explainers.Partition
-                explainers.Partition.__init__(
-                    self,
-                    self.model,
-                    self.masker,
-                    link=self.link,
-                    feature_names=self.feature_names,
-                    linearize_link=linearize_link,
-                    output_names=self.output_names,
-                    **kwargs
-                )
-            elif algorithm == "additive":
-                self.__class__ = explainers.Additive
-                explainers.Additive.__init__(
-                    self,
-                    self.model,
-                    self.masker,
-                    link=self.link,
-                    feature_names=self.feature_names,
-                    linearize_link=linearize_link,
-                    **kwargs
-                )
-            elif algorithm == "linear":
-                self.__class__ = explainers.Linear
-                explainers.Linear.__init__(
-                    self,
-                    self.model,
-                    self.masker,
-                    link=self.link,
-                    feature_names=self.feature_names,
-                    linearize_link=linearize_link,
-                    **kwargs
-                )
-            else:
-                raise InvalidAlgorithmError(
-                    "Unknown algorithm type passed: %s!" % algorithm
-                )
+        #     # build the right subclass
+        #     if algorithm == "exact":
+        #         self.__class__ = explainers.Exact
+        #         explainers.Exact.__init__(
+        #             self,
+        #             self.model,
+        #             self.masker,
+        #             link=self.link,
+        #             feature_names=self.feature_names,
+        #             linearize_link=linearize_link,
+        #             **kwargs
+        #         )
+        #     elif algorithm == "permutation":
+        #         self.__class__ = explainers.Permutation
+        #         explainers.Permutation.__init__(
+        #             self,
+        #             self.model,
+        #             self.masker,
+        #             link=self.link,
+        #             feature_names=self.feature_names,
+        #             linearize_link=linearize_link,
+        #             seed=seed,
+        #             **kwargs
+        #         )
+        #     elif algorithm == "partition":
+        #         self.__class__ = explainers.Partition
+        #         explainers.Partition.__init__(
+        #             self,
+        #             self.model,
+        #             self.masker,
+        #             link=self.link,
+        #             feature_names=self.feature_names,
+        #             linearize_link=linearize_link,
+        #             output_names=self.output_names,
+        #             **kwargs
+        #         )
+        #     elif algorithm == "additive":
+        #         self.__class__ = explainers.Additive
+        #         explainers.Additive.__init__(
+        #             self,
+        #             self.model,
+        #             self.masker,
+        #             link=self.link,
+        #             feature_names=self.feature_names,
+        #             linearize_link=linearize_link,
+        #             **kwargs
+        #         )
+        #     elif algorithm == "linear":
+        #         self.__class__ = explainers.Linear
+        #         explainers.Linear.__init__(
+        #             self,
+        #             self.model,
+        #             self.masker,
+        #             link=self.link,
+        #             feature_names=self.feature_names,
+        #             linearize_link=linearize_link,
+        #             **kwargs
+        #         )
+        #     else:
+        #         raise InvalidAlgorithmError(
+        #             "Unknown algorithm type passed: %s!" % algorithm
+        #         )
 
     def __call__(
         self,
@@ -239,19 +239,13 @@ class Explainer:
             if num_rows is None:
                 try:
                     num_rows = len(args[i])
-                except Exception:  # pylint: disable=broad-except
+                except Exception:
                     pass
 
             # convert DataFrames to numpy arrays
             if safe_isinstance(args[i], "pandas.core.frame.DataFrame"):
                 feature_names[i] = list(args[i].columns)
                 args[i] = args[i].to_numpy()
-
-            # convert nlp Dataset objects to lists
-            if safe_isinstance(args[i], "nlp.arrow_dataset.Dataset"):
-                args[i] = args[i]["text"]
-            elif issubclass(type(args[i]), dict) and "text" in args[i]:
-                args[i] = args[i]["text"]
 
         if batch_size == "auto":
             if hasattr(self.masker, "default_batch_size"):
@@ -385,11 +379,9 @@ class Explainer:
                     main_effects=main_effects,
                     clustering=clustering,
                     hierarchical_values=hierarchical_values,
-                    output_names=sliced_labels,  # self.output_names
+                    output_names=sliced_labels,
                     error_std=error_std,
-                    compute_time=time.time() - start_time
-                    # output_shape=output_shape,
-                    # lower_bounds=v_min, upper_bounds=v_max
+                    compute_time=time.time() - start_time,
                 )
             )
         return out[0] if len(out) == 1 else out

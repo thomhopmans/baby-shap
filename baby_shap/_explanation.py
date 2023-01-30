@@ -118,12 +118,12 @@ class Explanation(metaclass=MetaExplanation):
             output_names = Alias(list(output_names), self.output_dims[0])
 
         if output_names is not None and not isinstance(output_names, Alias):
-            l = len(_compute_shape(output_names))
-            if l == 0:
+            shape_len = len(_compute_shape(output_names))
+            if shape_len == 0:
                 pass
-            elif l == 1:
+            elif shape_len == 1:
                 output_names = Obj(output_names, self.output_dims)
-            elif l == 2:
+            elif shape_len == 2:
                 output_names = Obj(output_names, [0] + list(self.output_dims))
             else:
                 raise ValueError(
@@ -517,7 +517,7 @@ class Explanation(metaclass=MetaExplanation):
             if new_self.data is not None:
                 try:
                     new_self.data = getattr(np, fname)(np.array(self.data), **kwargs)
-                except:
+                except Exception:
                     new_self.data = None
             if (
                 new_self.base_values is not None
@@ -880,7 +880,8 @@ class Cohorts:
         return new_cohorts
 
     def __repr__(self):
-        return f"<shap._explanation.Cohorts object with {len(self.cohorts)} cohorts of sizes: {[v.shape for v in self.cohorts.values()]}>"
+        sizes = [v.shape for v in self.cohorts.values()]
+        return f"<shap._explanation.Cohorts object with {len(self.cohorts)} cohorts of sizes: {sizes}>"
 
 
 def _auto_cohorts(shap_values, max_cohorts):

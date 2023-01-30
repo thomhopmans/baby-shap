@@ -1,30 +1,31 @@
 """ Visualize the SHAP values with additive force style layouts.
 """
 
+import base64
 import json
 import os
 import random
-import string
-
-try:
-    from IPython.display import HTML, display
-
-    have_ipython = True
-except ImportError:
-    have_ipython = False
-import base64
 import re
+import string
 import warnings
 from collections.abc import Sequence
 
 import numpy as np
 import scipy as sp
 import scipy.cluster
+from IPython.display import HTML, display
 
 from baby_shap.plots._force_matplotlib import draw_additive_plot
 from baby_shap.plots._labels import labels
 from baby_shap.utils._clustering import hclust_ordering
-from baby_shap.utils._legacy import Data, DenseData, Instance, Link, Model, convert_to_link
+from baby_shap.utils._legacy import (
+    Data,
+    DenseData,
+    Instance,
+    Link,
+    Model,
+    convert_to_link,
+)
 
 
 def force(
@@ -275,9 +276,6 @@ def getjs():
 
 
 def initjs():
-    assert (
-        have_ipython
-    ), "IPython must be installed to use initjs()! Run `pip install ipython` and then restart shap."
     logo_path = os.path.join(
         os.path.split(__file__)[0], "resources", "logoSmallGray.png"
     )
@@ -445,7 +443,8 @@ class SimpleListVisualizer(BaseVisualizer):
         }
 
     def html(self):
-        # assert have_ipython, "IPython must be installed to use this visualizer! Run `pip install ipython` and then restart shap."
+        # assert have_ipython, "IPython must be installed to use this visualizer!
+        # Run `pip install ipython` and then restart shap."
         return """
 <div id='{id}'>{err_msg}</div>
  <script>
@@ -485,7 +484,8 @@ class AdditiveForceVisualizer(BaseVisualizer):
         }
 
     def html(self, label_margin=20):
-        # assert have_ipython, "IPython must be installed to use this visualizer! Run `pip install ipython` and then restart shap."
+        # assert have_ipython, "IPython must be installed to use this visualizer! 
+        # Run `pip install ipython` and then restart shap."
         self.data["labelMargin"] = label_margin
         return """
 <div id='{id}'>{err_msg}</div>
@@ -565,7 +565,8 @@ class AdditiveForceArrayVisualizer(BaseVisualizer):
                 }
 
     def html(self):
-        # assert have_ipython, "IPython must be installed to use this visualizer! Run `pip install ipython` and then restart shap."
+        # assert have_ipython, "IPython must be installed to use this visualizer! 
+        # Run `pip install ipython` and then restart shap."
         return """
 <div id='{id}'>{err_msg}</div>
  <script>

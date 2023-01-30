@@ -11,6 +11,7 @@ from scipy.special import binom
 from sklearn.linear_model import Lasso, LassoLarsIC, lars_path
 from tqdm.auto import tqdm
 
+from baby_shap.explainers._explainer import Explainer
 from baby_shap.utils._legacy import (
     DenseData,
     IdentityLink,
@@ -24,10 +25,10 @@ from baby_shap.utils._legacy import (
     match_model_to_data,
 )
 
-log = logging.getLogger("shap")
+log = logging.getLogger("baby_shap")
 
 
-class KernelExplainer:
+class KernelExplainer(Explainer):
     """Uses the Kernel SHAP method to explain the output of any function.
 
     Kernel SHAP is a method that uses a special weighted linear regression
@@ -61,13 +62,10 @@ class KernelExplainer:
         sense to connect them to the output with a link function where link(output) = sum(phi).
         If the model output is a probability then the LogitLink link function makes the feature
         importance values have log-odds units.
-
-    Examples
-    --------
-    See :ref:`Kernel Explainer Examples <kernel_explainer_examples>`
     """
 
     def __init__(self, model, data, link=IdentityLink(), **kwargs):
+        # super().__init__(model)
 
         # convert incoming inputs to standardized iml objects
         self.link = convert_to_link(link)
@@ -142,7 +140,7 @@ class KernelExplainer:
             "alpha" parameter of the sklearn.linear_model.Lasso model used for feature selection.
 
         gc_collect : bool
-           Run garbage collection after each explanation round. Sometime needed for memory intensive explanations (default False).
+           Garbage collection after each explanation round. Needed for memory intensive explanations (default False).
 
         Returns
         -------
@@ -650,7 +648,8 @@ class KernelExplainer:
         except np.linalg.LinAlgError:
             tmp2 = np.linalg.pinv(etmp_dot)
             warnings.warn(
-                "Linear regression equation is singular, Moore-Penrose pseudoinverse is used instead of the regular inverse.\n"
+                "Linear regression equation is singular, Moore-Penrose pseudoinverse is used instead of"
+                " the regular inverse.\n"
                 "To use regular inverse do one of the following:\n"
                 "1) turn up the number of samples,\n"
                 "2) turn up the L1 regularization with num_features(N) where N is less than the number of samples,\n"
